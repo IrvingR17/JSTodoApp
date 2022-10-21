@@ -4,6 +4,11 @@ document.addEventListener('DOMContentLoaded', function(){
     const table = document.getElementById('table')
     const description = document.getElementById('description')
     const btnAdd = document.getElementById('add')
+    let id = 0
+
+    function deleteTask (id){
+        document.getElementById(id).remove()
+    }
 
     function addTask(){
         if(title.value === '' | description.value === ''){
@@ -14,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
         alert.classList.add('d-none')
         const row = table.insertRow()
+        row.setAttribute('id', id++)
         row.innerHTML = `
             <td>
                 ${title.value}
@@ -28,12 +34,17 @@ document.addEventListener('DOMContentLoaded', function(){
                 <button class="btn btn-primary mb-1">
                 <i class="fa fa-pencil"></i>
                 </button>
-                <button class="btn btn-danger mb-1 ml-1">
-                <i class="fa fa-trash"></i>
-                </button>
             </td>
         `
+        const btnDelete = document.createElement('button')
+        btnDelete.classList.add('btn', 'btn-danger', 'mb-1', 'ml-1')
+        btnDelete.innerHTML = '<i class="fa fa-trash"></i>'
+        btnDelete.onclick = function (){
+            deleteTask(row.getAttribute('id'))
+        }
+        row.children[3].appendChild(btnDelete)
     }
 
     btnAdd.onclick = addTask;
 })
+ 
